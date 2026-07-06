@@ -1,0 +1,19 @@
+model Payment {
+
+  id String @id @default(cuid())
+
+  bookingId String @unique
+
+  booking Booking @relation(fields:[bookingId], references:[id])
+
+  transactionId String
+
+  amount Float
+
+  provider PaymentProvider
+
+  status PaymentStatus
+
+  paidAt DateTime?
+
+}

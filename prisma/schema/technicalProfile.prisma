@@ -1,0 +1,25 @@
+model TechnicianProfile {
+
+  id              String @id @default(uuid())
+
+  userId          String @unique
+  user            User @relation(fields:[userId], references:[id])
+
+  bio             String?
+  experience      Int
+  hourlyRate      Float
+
+  averageRating   Float @default(0)
+
+  services        Service[]
+
+  bookings        Booking[]
+
+  reviews         Review[]
+
+  availability    Availability[]
+
+  createdAt       DateTime @default(now())
+
+  @@map("technicalProfiles")
+}
