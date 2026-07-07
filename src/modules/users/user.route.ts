@@ -10,7 +10,7 @@ const router = Router();
 
 router.post("/register", userController.registerUser);
 
-router.post("/me", userController.getMyProfile);
+router.get  ("/me", userController.getMyProfile);
 
 
 

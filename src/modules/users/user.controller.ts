@@ -12,6 +12,9 @@ import httpStatus from "http-status";
 import { userService } from "./user.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import { jwtUtils } from "../../utils/jwt";
+import { log } from "console";
+import jwt from "jsonwebtoken";
 
 
 
@@ -39,7 +42,25 @@ const registerUser = catchAsync(
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
   
-  
+  //  res.send("hello world app ");
+   const {accessToken} = req.cookies;
+   console.log(accessToken)
+
+   const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
+
+   if(typeof verifiedToken === "string" ) {
+    throw new Error("Invalid token");
+   }
+   const profile = await userService.getMyProfile(verifiedToken.id);
+   sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,  
+    message: "User profile fetched successfully",
+    data: {profile},
+  });
+
+   console.log(verifiedToken);
+   
   })
 
 // const registerUser = async (req: Request, res: Response) => {
