@@ -26,25 +26,22 @@ const registerIntoDB = async(payload: RegisterUserPayload )=>{
   );
 
   const createdUser = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-      role, // Save the user's role
-    },
-  });
+  data: {
+    name,
+    email,
+    password: hashedPassword,
+    role,
 
-  // Create Technician Profile only if the user is a technician
-  if (role === "TECHNICIAN") {
-    await prisma.technicianProfile.create({
-      data: {
-        userId: createdUser.id,
-        experience: Number(experience),
-        hourlyRate: Number(hourlyRate),
+    ...(role === "TECHNICIAN" && {
+      technician: {
+        create: {
+          experience: Number(experience),
+          hourlyRate: Number(hourlyRate),
+        },
       },
-    });
-  }
-
+    }),
+  },
+});
   const user = await prisma.user.findUnique({
     where: {
       id: createdUser.id,
