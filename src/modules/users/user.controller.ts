@@ -43,15 +43,17 @@ const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
   
   //  res.send("hello world app ");
-   const {accessToken} = req.cookies;
-   console.log(accessToken)
 
-   const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
 
-   if(typeof verifiedToken === "string" ) {
-    throw new Error("Invalid token");
-   }
-   const profile = await userService.getMyProfile(verifiedToken.id);
+  //  const {accessToken} = req.cookies;
+  //  console.log(req.user, "user from middleware");
+
+  //  const verifiedToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
+
+  //  if(typeof verifiedToken === "string" ) {
+  //   throw new Error("Invalid token");
+  //  }
+   const profile = await userService.getMyProfile(req.user!.id as string);
    sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,  
@@ -59,7 +61,7 @@ const getMyProfile = catchAsync(
     data: {profile},
   });
 
-   console.log(verifiedToken);
+  //  console.log(verifiedToken);
    
   })
 
