@@ -5,7 +5,8 @@ import config from "./config";
 import httpStatus from "http-status";
 import { prisma } from "./lib/prisma";
 import bcrypt from "bcryptjs";
-import { userRouter } from "./modules/users/user.route";
+import {  userRoutes } from "./modules/users/user.route";
+import { authRoutes } from "./modules/auth/auth.route";
 
 
 
@@ -26,6 +27,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello world app ");
 });
 
-app.use("/api/users", userRouter);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 export default app;

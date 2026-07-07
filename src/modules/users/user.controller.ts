@@ -36,6 +36,12 @@ const registerUser = catchAsync(
   },
 );
 
+const getMyProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+  
+  
+  })
+
 // const registerUser = async (req: Request, res: Response) => {
 //  try {
 
@@ -62,4 +68,5 @@ const registerUser = catchAsync(
 
 export const userController = {
   registerUser,
+  getMyProfile,
 };
