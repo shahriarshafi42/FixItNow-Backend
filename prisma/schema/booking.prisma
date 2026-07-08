@@ -14,6 +14,8 @@ model Booking {
 
   service Service @relation(fields:[serviceId], references:[id])
 
+  
+
   bookingDate DateTime
 
   status BookingStatus

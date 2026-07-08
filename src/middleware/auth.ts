@@ -20,6 +20,7 @@ declare global {
 }
 
 
+
  export const auth = (...requiredRoles: Role[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.accessToken

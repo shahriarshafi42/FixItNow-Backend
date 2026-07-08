@@ -10,6 +10,6 @@ router.post("/create", auth(Role.CUSTOMER), bookingController.createBooking);
 
 router.get("/getallbookings", auth(Role.CUSTOMER), bookingController.getBooking);
 
-router.get("/:id", auth(Role.CUSTOMER), bookingController.getbookingDetails );
+router.get("/booking-details/:id", auth(Role.CUSTOMER), bookingController.getbookingDetails );
 
 export const bookingRoutes = router;
