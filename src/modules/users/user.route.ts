@@ -51,4 +51,10 @@ router.get( "/me",auth(Role.ADMIN, Role.TECHNICIAN, Role.CUSTOMER),
 
 router.put("/technician-profile", auth(Role.TECHNICIAN), userController.updateTechnicianProfile);
 
+router.put(
+  "/technician-availability",
+  auth(Role.TECHNICIAN),
+  userController.updateAvailability
+);
+
 export const userRoutes = router;

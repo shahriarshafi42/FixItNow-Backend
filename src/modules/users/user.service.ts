@@ -109,8 +109,34 @@ const updatedUser = await prisma.user.update({
 
 return updatedUser;
 }
+
+const updateAvailability = async (
+  userId: string,
+  payload: any
+) => {
+  const {  dayOfWeek, startTime, endTime } = payload;
+
+  const technician = await prisma.technicianProfile.findUniqueOrThrow({
+    where: {
+      userId,
+    },
+  });
+
+  const availability =
+    await prisma.availability.create({
+      data: {
+        technicianId: technician.id,
+        dayOfWeek,
+        startTime,
+        endTime,
+      },
+    });
+
+  return availability;
+};
 export const userService = {
     registerIntoDB,
     getMyProfile,
     updateTechnicianProfile,
+    updateAvailability
 }

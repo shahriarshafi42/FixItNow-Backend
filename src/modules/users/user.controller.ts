@@ -108,8 +108,28 @@ const updateTechnicianProfile = catchAsync(async (req: Request, res: Response, n
 
 )
 
+const updateAvailability = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user!.id;
+    const payload = req.body;
+
+    const result = await userService.updateAvailability(
+      userId,
+      payload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Availability updated successfully",
+      data: result,
+    });
+  }
+);
+
 export const userController = {
   registerUser,
   getMyProfile,
   updateTechnicianProfile,
+  updateAvailability
 };

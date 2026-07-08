@@ -15,5 +15,6 @@ model Payment {
   status PaymentStatus
 
   paidAt DateTime?
+  @@index([bookingId])
 
 }

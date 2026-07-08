@@ -20,6 +20,7 @@ model TechnicianProfile {
   availability    Availability[]
 
   createdAt       DateTime @default(now())
+  @@index([userId])
 
   @@map("technicalProfiles")
 }

@@ -23,5 +23,7 @@ model Booking {
   review Review?
 
   createdAt DateTime @default(now())
+  @@index([customerId])
+  @@index([technicianId])
 
 }
