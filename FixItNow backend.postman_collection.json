@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Shahriar\",\r\n  \"email\": \"hello@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"CUSTOMER\",\r\n  \"experience\": 2,\r\n  \"hourlyRate\": 500\r\n}",
+              "raw": "{\r\n  \"name\": \"user\",\r\n  \"email\": \"user12@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"CUSTOMER\",\r\n  \"experience\": 10,\r\n  \"hourlyRate\": 1000,\r\n   \"dayOfWeek\": \"Monday\",\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"17:00\"\r\n \r\n\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -97,6 +97,88 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "update availability",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dayOfWeek\": 5,\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"17:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/technician-availability",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "technician-availability"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get technical bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users/technician-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "technician-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update technical bookings",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"DECLINED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/update-technician-bookings/cmrc7qxm40002asesg7bnnnps",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "update-technician-bookings",
+                "cmrc7qxm40002asesg7bnnnps"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -110,7 +192,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"email\": \"hello@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -128,6 +210,443 @@
                 "api",
                 "auth",
                 "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "bookings",
+      "item": [
+        {
+          "name": "crate bookings",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"technicianId\": \"e977876b-2814-4413-8eef-af3b6c754400\",\r\n  \"serviceId\": \"cmrcbs0jn0001ywes0i4jwpg2\",\r\n  \"bookingDate\": \"2026-07-20T10:00:00.000Z\",\r\n  \"status\": \"COMPLETED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get bookings",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/getallbookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "getallbookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get bookings by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/booking-details/cmrc7qxm40002asesg7bnnnps",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "booking-details",
+                "cmrc7qxm40002asesg7bnnnps"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "services",
+      "item": [
+        {
+          "name": "get all services",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/services/allservices",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services",
+                "allservices"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create service",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Home Cleaning\",\r\n  \"description\": \"Complete home cleaning including kitchen, bathroom, and bedrooms.\",\r\n  \"price\": 1000,\r\n  \"categoryId\": \"cmrc7if1z0000asesslh0aqek\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "all technians",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/services/technicians?experience=76",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services",
+                "technicians"
+              ],
+              "query": [
+                {
+                  "key": "experience",
+                  "value": "76"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getTechnicianWithReviews",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"cmrc7qxm40002asesg7bnnnps\",\r\n  \"rating\": 5,\r\n  \"comment\": \"Excellent service. Highly recommended!\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/services/technicians/e977876b-2814-4413-8eef-af3b6c754400",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services",
+                "technicians",
+                "e977876b-2814-4413-8eef-af3b6c754400"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all category",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"cmrc7qxm40002asesg7bnnnps\",\r\n  \"rating\": 5,\r\n  \"comment\": \"Excellent service. Highly recommended!\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/services/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "create category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Interior Design\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "item": [
+        {
+          "name": "post reviews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\":\"cmrc7qxm40002asesg7bnnnps\",\r\n  \"rating\": 5,\r\n  \"comment\": \"Excellent service. Highly recommended!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "get all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"ACTIVE\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/1601101d-a0be-4811-b544-864b460b51ef",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "1601101d-a0be-4811-b544-864b460b51ef"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/allbookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "allbookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/allcategories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "allcategories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"playing\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/createcategories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "createcategories"
               ]
             }
           },

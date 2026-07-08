@@ -69,4 +69,6 @@ router.patch(
   userController.updateBookingStatus
 );
 
+
+
 export const userRoutes = router;
