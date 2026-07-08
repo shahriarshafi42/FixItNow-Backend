@@ -18,9 +18,7 @@ router.post("/register", userController.registerUser);
 
 
 
-router.get(
-  "/me",
-  auth(Role.ADMIN, Role.TECHNICIAN, Role.CUSTOMER),
+router.get( "/me",auth(Role.ADMIN, Role.TECHNICIAN, Role.CUSTOMER),
 
   //   (req: Request, res: Response, next : NextFunction)=>{
 
@@ -50,5 +48,7 @@ router.get(
 
   userController.getMyProfile,
 );
+
+router.put("/technician-profile", auth(Role.TECHNICIAN), userController.updateTechnicianProfile);
 
 export const userRoutes = router;
