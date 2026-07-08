@@ -44,15 +44,68 @@ const createBooking = async (userId: string, payload: ICreateBooking) => {
   return booking;
 };
 
-const getBooking = async (userId: string) => {
+const getBookings = async (userId: string) => {
+  const result = await prisma.booking.findMany({
+    where: {
+      customerId: userId,
+    },
+    include: {
+      technician: {
+        include: {
+          user: true,
+        },
+      },
+      service: true,
+      payment: true,
+      review: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
+  return result;
 };
-const getbookingDetails = async (bookingId: string) => {
 
-}
+
+const getBookingById = async (bookingId: string) => {
+  const result = await prisma.booking.findUniqueOrThrow({
+    where: {
+      id: bookingId,
+    },
+    include: {
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
+      technician: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phone: true,
+            },
+          },
+        },
+      },
+      service: true,
+      payment: true,
+      review: true,
+    },
+  });
+
+  return result;
+};
 
 export const bookingService = {
   createBooking,
-  getBooking,
-  getbookingDetails
+  getBookings,
+  getBookingById
 };
+
