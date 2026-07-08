@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { servicesservice } from "./services.service";
 import httpStatus from "http-status";
+import { categoryService } from "../category/category.service";
 
 const createService = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user!.id;
@@ -20,7 +21,7 @@ const createService = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllServices = catchAsync(async (req: Request, res: Response) => {
-  const result = await servicesservice.getalallservices(req.query);
+  const result = await servicesservice.getAllServices(req.query);
 
   res.status(httpStatus.OK).json({
     success: true,
@@ -30,24 +31,55 @@ const getAllServices = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getAllTechnicians = catchAsync(async (req: Request, res: Response) => {
+const getAllTechnicians = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await servicesservice.getAllTechnicians(req.query);
 
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Technicians retrieved successfully",
+      data: result,
+    });
+  }
+);
 
-})
+const getTechnicianWithReviews = catchAsync(
+  async (req: Request, res: Response) => {
+    const technicianId = req.params.id as string;
 
-const getAllTechniciansreviews = catchAsync(async (req: Request, res: Response) => {
+    const result = await servicesservice.getTechnicianWithReviews(
+      technicianId
+    );
 
-})
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Technician profile retrieved successfully",
+      data: result,
+    });
+  }
+);
 
-const getAllServicescategories = catchAsync(async (req: Request, res: Response) => {
+const getAllCategories = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await servicesservice.getAllCategories();
 
-})
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Categories retrieved successfully",
+      data: result,
+    });
+  }
+);
+
 
 
 export const serviceController = {
   getAllServices,
   getAllTechnicians,
-  getAllTechniciansreviews,
-  getAllServicescategories,
+  getTechnicianWithReviews,
+  getAllCategories,
   createService,
 };

@@ -10,6 +10,7 @@ import { authRoutes } from "./modules/auth/auth.route";
 import { serviceRoutes } from "./modules/Services & Technicians/services.route";
 import { bookingRoutes } from "./modules/bookings/bookings.route";
 import { categoryRoutes } from "./modules/category/category.route";
+import { reviewRoutes } from "./modules/reviews/review.route";
 
 
 
@@ -35,6 +36,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 
 

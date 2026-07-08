@@ -1,5 +1,7 @@
 import { prisma } from "../../lib/prisma";
 import { ICreateService } from "./services.interface";
+
+
 const createService = async (
   userId: string,
   payload: ICreateService
@@ -39,11 +41,12 @@ const createService = async (
 };
 
 
-const getalallservices = async (query: any) => {
-  const { type, location, rating, minPrice, maxPrice } = query;
+const getAllServices = async (query: any) => {
+  const { type, rating, minPrice, maxPrice } = query;
 
   const where: any = {};
 
+  // Filter by category
   if (type) {
     where.category = {
       name: {
@@ -53,24 +56,16 @@ const getalallservices = async (query: any) => {
     };
   }
 
-  if (location) {
-    where.technician = {
-      location: {
-        contains: location,
-        mode: "insensitive",
-      },
-    };
-  }
-
+  // Filter by technician rating
   if (rating) {
     where.technician = {
-      ...where.technician,
       averageRating: {
         gte: Number(rating),
       },
     };
   }
 
+  // Filter by price
   if (minPrice || maxPrice) {
     where.price = {};
 
@@ -86,8 +81,19 @@ const getalallservices = async (query: any) => {
   const result = await prisma.service.findMany({
     where,
     include: {
-      technician: true,
       category: true,
+      technician: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phone: true,
+            },
+          },
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -97,22 +103,120 @@ const getalallservices = async (query: any) => {
   return result;
 };
 
+const getAllTechnicians = async (query: any) => {
+  const { rating, minRate, maxRate, experience } = query;
 
-const getalltechnicians = ()=>{
+  const where: any = {};
 
-}
-const getalltechniciansreviews = ()=>{
+  // Filter by average rating
+  if (rating) {
+    where.averageRating = {
+      gte: Number(rating),
+    };
+  }
 
-}
+  // Filter by hourly rate
+  if (minRate || maxRate) {
+    where.hourlyRate = {};
 
-const getallservicescategories = ()=>{
+    if (minRate) {
+      where.hourlyRate.gte = Number(minRate);
+    }
 
-}
+    if (maxRate) {
+      where.hourlyRate.lte = Number(maxRate);
+    }
+  }
 
+  // Filter by experience
+  if (experience) {
+    where.experience = {
+      gte: Number(experience),
+    };
+  }
+
+  const result = await prisma.technicianProfile.findMany({
+    where,
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          address: true,
+        },
+      },
+      services: {
+        include: {
+          category: true,
+        },
+      },
+      availability: true,
+      reviews: true,
+    },
+    orderBy: {
+      averageRating: "desc",
+    },
+  });
+
+  return result;
+};
+const getTechnicianWithReviews = async (technicianId: string) => {
+  const technician = await prisma.technicianProfile.findUniqueOrThrow({
+    where: {
+      id: technicianId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          address: true,
+        },
+      },
+      services: {
+        include: {
+          category: true,
+        },
+      },
+      availability: true,
+      reviews: {
+        include: {
+          customer: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
+  });
+
+  return technician;
+};
+
+
+const getAllCategories = async () => {
+  const result = await prisma.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return result;
+};
 export const servicesservice = {
-    getalallservices,
-    getalltechnicians,
-    getalltechniciansreviews,
-    getallservicescategories,
+    getAllServices,
+    getAllTechnicians,
+    getTechnicianWithReviews,
+    getAllCategories,
     createService
 }

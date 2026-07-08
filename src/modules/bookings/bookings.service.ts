@@ -29,7 +29,7 @@ const createBooking = async (userId: string, payload: ICreateBooking) => {
         technicianId,
         serviceId,
         bookingDate: new Date(bookingDate),
-        status: "REQUESTED",
+        status: "COMPLETED",
       },
       include: {
         customer: true,

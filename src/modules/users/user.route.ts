@@ -57,4 +57,16 @@ router.put(
   userController.updateAvailability
 );
 
+router.get(
+  "/technician-bookings",
+  auth(Role.TECHNICIAN),
+  userController.getTechnicianBookings
+);
+
+router.patch(
+  "/update-technician-bookings/:id",
+  auth(Role.TECHNICIAN),
+  userController.updateBookingStatus
+);
+
 export const userRoutes = router;

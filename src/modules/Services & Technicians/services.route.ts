@@ -15,8 +15,8 @@ router.get("/allservices", serviceController.getAllServices);
 
 router.get("/technicians",serviceController.getAllTechnicians);
 
-router.get("/technicians/:id",serviceController.getAllTechniciansreviews);
+router.get("/technicians/:id",serviceController.getTechnicianWithReviews);
 
-router.get("/categories",serviceController.getAllServicescategories);
+router.get("/categories",serviceController.getAllCategories);
 
 export const serviceRoutes = router;

@@ -134,9 +134,85 @@ const updateAvailability = async (
 
   return availability;
 };
+const getTechnicianBookings = async (userId: string) => {
+  // Find technician profile
+  const technician = await prisma.technicianProfile.findUniqueOrThrow({
+    where: {
+      userId,
+    },
+  });
+
+  // Get bookings
+  const bookings = await prisma.booking.findMany({
+    where: {
+      technicianId: technician.id,
+    },
+    include: {
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          address: true,
+        },
+      },
+      service: true,
+      payment: true,
+      review: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return bookings;
+};
+
+const updateBookingStatus = async (
+  userId: string,
+  bookingId: string,
+  status: "ACCEPTED" | "DECLINED" | "IN_PROGRESS" | "COMPLETED"
+) => {
+  // Find technician profile
+  const technician = await prisma.technicianProfile.findUniqueOrThrow({
+    where: {
+      userId,
+    },
+  });
+
+  // Check booking belongs to this technician
+  const booking = await prisma.booking.findFirstOrThrow({
+    where: {
+      id: bookingId,
+      technicianId: technician.id,
+    },
+  });
+
+  const updatedBooking = await prisma.booking.update({
+    where: {
+      id: booking.id,
+    },
+    data: {
+      status,
+    },
+    include: {
+      customer: true,
+      service: true,
+      payment: true,
+      review: true,
+    },
+  });
+
+  return updatedBooking;
+};
+
+
 export const userService = {
     registerIntoDB,
     getMyProfile,
     updateTechnicianProfile,
-    updateAvailability
+    updateAvailability,
+    getTechnicianBookings,
+    updateBookingStatus
 }

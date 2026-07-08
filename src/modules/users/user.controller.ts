@@ -15,6 +15,7 @@ import { sendResponse } from "../../utils/sendResponse";
 import { jwtUtils } from "../../utils/jwt";
 import { log } from "console";
 import jwt from "jsonwebtoken";
+import { bookingService } from "../bookings/bookings.service";
 
 
 
@@ -127,9 +128,47 @@ const updateAvailability = catchAsync(
   }
 );
 
+const getTechnicianBookings = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user!.id;
+
+    const result = await userService.getTechnicianBookings(userId);
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Technician bookings retrieved successfully",
+      data: result,
+    });
+  }
+);
+
+const updateBookingStatus = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user!.id;
+    const bookingId = req.params.id as string;
+    const { status } = req.body;
+
+    const result = await userService.updateBookingStatus(
+      userId,
+      bookingId,
+      status
+    );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Booking status updated successfully",
+      data: result,
+    });
+  }
+);
+  
 export const userController = {
   registerUser,
   getMyProfile,
   updateTechnicianProfile,
-  updateAvailability
+  updateAvailability,
+  getTechnicianBookings,
+  updateBookingStatus
 };
