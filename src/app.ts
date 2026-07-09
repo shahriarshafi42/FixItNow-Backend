@@ -1,5 +1,5 @@
 import cookieParser from "cookie-parser";
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
 import httpStatus from "http-status";
@@ -12,6 +12,8 @@ import { bookingRoutes } from "./modules/bookings/bookings.route";
 import { categoryRoutes } from "./modules/category/category.route";
 import { reviewRoutes } from "./modules/reviews/review.route";
 import { adminRoutes } from "./modules/admin/admin.route";
+import { notFound } from "./middleware/notFound";
+import { globalErrorHandlar,  } from "./middleware/globalErrorHandler";
 
 
 
@@ -41,5 +43,17 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
 
 
+app.use(notFound);
 
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//  res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+//   success: false,
+//   statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+//   message: err.message ,
+//   error: err.stack,
+
+// })
+// })
+ 
+app.use(globalErrorHandlar);
 export default app;
