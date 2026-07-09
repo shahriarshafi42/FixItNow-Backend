@@ -10,11 +10,18 @@ model User {
 
   status      UserStatus @default(ACTIVE)
 
+
   technician  TechnicianProfile?
 
   bookings    Booking[]
 
+  payments Payment[]
+
   reviews     Review[]
+
+  
+
+  
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

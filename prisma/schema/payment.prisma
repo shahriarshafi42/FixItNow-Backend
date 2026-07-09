@@ -1,20 +1,22 @@
 model Payment {
+  id             String @id @default(cuid())
 
-  id String @id @default(cuid())
+  // User Relation
+  userId         String
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  bookingId String @unique
+  // Booking Relation
+  bookingId      String @unique
+  booking        Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
-  booking Booking @relation(fields:[bookingId], references:[id])
+  transactionId  String
+  amount         Float
 
-  transactionId String
+  provider       PaymentProvider
+  status         PaymentStatus
 
-  amount Float
+  paidAt         DateTime?
 
-  provider PaymentProvider
-
-  status PaymentStatus
-
-  paidAt DateTime?
+  @@index([userId])
   @@index([bookingId])
-
 }

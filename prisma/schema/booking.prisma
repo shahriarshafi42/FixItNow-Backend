@@ -20,7 +20,7 @@ model Booking {
 
   status BookingStatus
 
-  payment Payment?
+   payment       Payment?  
 
   review Review?
 
