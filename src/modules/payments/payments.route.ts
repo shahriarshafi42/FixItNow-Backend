@@ -11,4 +11,8 @@ router.post(
     auth(Role.ADMIN, Role.CUSTOMER, Role.TECHNICIAN),
      paymentController.createPaymentSession);
 
+     router.post(
+        "/webhook",
+        paymentController.handleStripeWebhook)
+
 export const paymentRoutes = router;

@@ -1,3 +1,4 @@
+import { Stripe } from "stripe"
 import config from "../../config"
 import { prisma } from "../../lib/prisma"
 import { stripe } from "../../lib/stripe"
@@ -42,9 +43,7 @@ const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     success_url: `${config.app_url}/payment?success=true`,
     cancel_url: `${config.app_url}/payment?success=false`,
-    metadata: {
-        userId: user.id
-    }
+    
 })
 return session.url;
 
@@ -56,7 +55,36 @@ return session.url;
  };
 }
 
+const handleStripeWebhook = async (payload: Buffer, signature: string) => {
+const endpointSecret = config.stripe_webhook_secret;
+const event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+
+// Handle the event
+  switch (event.type) {
+    case 'checkout.session.completed':
+    //   const paymentIntent = event.data.object;
+    console.log(event.data.object);
+    const session : Stripe.Checkout.Session= event.data.object;
+    
+    
+
+      break;
+    case 'customer.subscription.created':
+      const paymentMethod = event.data.object;
+      // Then define and call a method to handle the successful attachment of a PaymentMethod.
+      // handlePaymentMethodAttached(paymentMethod);
+      break;
+      case 'customer.subscription.updated':
+        break;
+    default:
+      // Unexpected event type
+      console.log(`No evet mached. Unhandled event type ${event.type}.`);
+      break;
+  }
+
+}
 
 export const paymentService = {
-    createpayment
+    createpayment,
+    handleStripeWebhook
 }
