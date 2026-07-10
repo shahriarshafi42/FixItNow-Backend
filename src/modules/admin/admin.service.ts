@@ -109,7 +109,7 @@ const getAllCategories = async () => {
 const createCategory = async (payload: ICategory) => {
   const { name } = payload;
 
-  // Check if category already exists
+  
   const isCategoryExist = await prisma.category.findUnique({
     where: {
       name,

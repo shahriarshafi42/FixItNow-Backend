@@ -51,7 +51,7 @@ const createpayment = async (userId: string) => {
 
         transactionId: session.id,
         stripeCustomerId,
-        status: PaymentStatus.PENDING,
+        status:"COMPLETED",
       },
     });
 
@@ -121,7 +121,53 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
   }
 };
 
+const getPaymentHistory = async (userId: string) => {
+  const payments = await prisma.payment.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      booking: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return payments;
+};
+
+const getPaymentDetails = async (paymentId: string, userId: string) => {
+  const payment = await prisma.payment.findFirst({
+    where: {
+      id: paymentId,
+      userId,
+    },
+    include: {
+      booking: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  if (!payment) {
+    throw new Error("Payment not found");
+  }
+
+  return payment;
+};
+
+
 export const paymentService = {
   createpayment,
   handleStripeWebhook,
+  getPaymentHistory,
+  getPaymentDetails
 };
+
+

@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { paymentService } from "./payments.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import { prisma } from "../../lib/prisma";
 
 
 const createPaymentSession = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -35,8 +36,42 @@ const handleStripeWebhook = catchAsync(async (req: Request, res: Response, next:
 })
 
 
+const getPaymentHistory = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const result = await paymentService.getPaymentHistory(user.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Payment history retrieved successfully",
+    data: result,
+  });
+});
+
+
+const getPaymentDetails = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+   
+    
+    const result = await paymentService.getPaymentDetails(
+      req.params.id as string,
+      user.id
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Payment details retrieved successfully",
+      data: result,
+    });
+  }
+);
 
 export const paymentController = {
     createPaymentSession,
-    handleStripeWebhook
+    handleStripeWebhook,
+    getPaymentHistory,
+    getPaymentDetails
 }

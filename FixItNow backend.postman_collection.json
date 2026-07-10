@@ -653,6 +653,107 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "payments",
+      "item": [
+        {
+          "name": "create payments",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"user\",\r\n  \"email\": \"user12@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"CUSTOMER\",\r\n  \"experience\": 10,\r\n  \"hourlyRate\": 1000,\r\n   \"dayOfWeek\": \"Monday\",\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"17:00\"\r\n \r\n\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/payments/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "confirm payments",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"sessionId\": \"cs_test_a18j1xUmjyxjnvi0WmF3OMm1LKAJwUGo899BvmkRJWSwipcw8W8NRbaSgo\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/payments/confirm",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "confirm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payments history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payment details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments/cmrfhawfv000098esgnv95bf0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "cmrfhawfv000098esgnv95bf0"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
