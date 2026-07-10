@@ -1,16 +1,18 @@
 model Payment {
   id             String   @id @default(cuid())
 
-  userId         String
+  userId         String @unique
   user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  bookingId      String @unique
-  booking         Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId      String? @unique
+  booking         Booking? @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
-  amount         Float
-  transactionId  String?
-  provider       PaymentProvider
+  
+  transactionId  String? @unique
+  
   status         PaymentStatus
+  stripeCustomerId String? @unique
+  stripeSubscriptrionId String? @unique
 
   paidAt         DateTime?
 

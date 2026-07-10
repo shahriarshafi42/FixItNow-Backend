@@ -8,7 +8,7 @@ import httpStatus from "http-status";
 const createPaymentSession = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
  const userId = req.user?.id;
- const result = await paymentService.createpayment(userId!);
+ const result = await paymentService.createpayment(userId as string);
 
  sendResponse(res, {
     success: true,
@@ -33,6 +33,8 @@ const handleStripeWebhook = catchAsync(async (req: Request, res: Response, next:
 
 })
 })
+
+
 
 export const paymentController = {
     createPaymentSession,
